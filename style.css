@@ -48,10 +48,27 @@ button:hover {
     left: 1rem;
 }
 
+#name {
+    margin-left: .5em;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .name-field {
+    display: flex;
     position: fixed;
-    top: 1.2rem;
-    left: 1.2rem;
+    top: 1em;
+    left: 1em;
+}
+
+#setting {
+    margin: 1em;
+    height: 40px;
+    width: 200px;
 }
 
 .red-roles {
