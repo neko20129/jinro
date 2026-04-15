@@ -1,16 +1,72 @@
 <!doctype html>
-
 <html>
-  <head>
-    <title>オンライン人狼</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div id="title-scr" class="screen">
-      <h1>オンライン人狼</h1>
-      <button id="create-btn">部屋を作る</button>   
-      <button id="join-btn">部屋に参加</button>
-      <button id="roles-btn">役職説明</button>
-    </div>
-  </body>
+    <head>
+        <title>オンライン人狼</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="name-field">
+            <p id="name"></p>
+            <button id="setting"></button>
+        </div>
+
+        <div id="title-scr" class="screen">
+            <h1>オンライン人狼</h1>
+            <button id="create-btn">部屋を作る</button>
+            <button id="join-btn">部屋に参加</button>
+            <button id="roles-btn">役職説明</button>
+        </div>
+
+        <div id="create-scr" class="screen" style="display:none">
+            <button class="title-btn">◀</button>
+        </div>
+
+        <div id="join-scr" class="screen" style="display:none">
+            <button class="title-btn">◀</button>
+        </div>
+
+        <div id="roles-scr" class="screen" style="display:none">
+            <div class="flex-style">
+                <div class="flex-style-div">
+                    <div>
+                        <h2 class="red-roles">人狼</h2>
+                        <p>スキルを使って対象を殺せます</p>
+                        <p>人狼が死んだらゲームが終了します</p>
+                    </div><br/>
+
+                    <div>
+                        <h2 class="red-roles">狂人</h2>
+                        <p>仲間の人狼が表示されます</p>
+                        <p>占い師、霊媒師には村人陣営と表示されます</p>
+                    </div><br/>
+                </div>
+
+                <div class="flex-style-div">
+                    <div>
+                        <h2 class="green-roles">占い師</h2>
+                        <p>スキルを使って対象の陣営がわかります</p>
+                        <p>狂人を占うと村人陣営と表示されます</p>
+                    </div><br/>
+
+                    <div>
+                        <h2 class="green-roles">霊媒師</h2>
+                        <p>墓にスキルを使って対象の陣営がわかります</p>
+                        <p>狂人を占うと村人陣営と表示されます</p>
+                    </div><br/>
+
+                    <div>
+                        <h2 class="green-roles">村人</h2>
+                        <p>ふつうの人</p>
+                        <p>仕事はありません</p>
+                    </div>
+                </div>
+            </div>
+            <button class="title-btn">◀</button>
+        </div>
+
+        <script src="variable.js"></script>
+        <script src="eventlistener.js"></script>
+        <script src="main.js"></script>
+    </body>
 </html>
