@@ -6,7 +6,7 @@
     </head>
 
     <body>
-        <div class="name-field">
+        <div id="name-field">
             <p class="name">ユーザー名: <span id="name">おなまえ</span></p>
             <button id="setting">ユーザー名を変更</button>
         </div>
@@ -16,6 +16,16 @@
             <button id="create-btn">部屋を作る</button>
             <button id="join-btn">部屋に参加</button>
             <button id="roles-btn">役職説明</button>
+        </div>
+
+        <div id="setting-scr" class="screen" style="display:none">
+            <div class="text-form">
+                <label>
+                    <input id="name-form" type="text" placeholder="ユーザー名を入力(最大20文字)" maxlength="20">
+                </label>
+                <button id="set">決定</button>
+            </div>
+            <button class="title-btn">◀</button>
         </div>
 
         <div id="create-scr" class="screen" style="display:none">
