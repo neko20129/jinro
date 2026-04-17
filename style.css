@@ -56,9 +56,10 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 40px;
 }
 
-.name-field {
+#name-field {
     display: flex;
     position: fixed;
     top: 1em;
@@ -69,6 +70,45 @@ button:hover {
     margin: 1em;
     height: 40px;
     width: 200px;
+}
+
+.text-form {
+    display: flex;
+    align-items: center;
+    gap: 0 10px;
+}
+
+.text-form label {
+    width: 300px;
+}
+
+.text-form input {
+    width: 100%;
+    height: 40px;
+    padding: 1px 5px 1px 8px;
+    font-size: 1em;
+    border: 1px solid #999999;
+    box-sizing: border-box;
+    color: #000;
+    outline: none;
+}
+
+.text-form button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 34px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.text-form button::before {
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
 }
 
 .red-roles {
