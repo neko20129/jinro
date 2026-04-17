@@ -4,6 +4,8 @@ document.getElementById('join-btn').addEventListener('click', () => changeScreen
 document.getElementById('roles-btn').addEventListener('click', () => changeScreen('roles-scr'));
 document.getElementById('setting').addEventListener('click', () => changeScreen('setting-scr'));
 
+document.getElementById('set').addEventListener('click', () => setName());
+
 function changeScreen(scrId) {
     const screens = document.querySelectorAll('.screen');
     screens.forEach(screen => screen.style.display = 'none');
@@ -23,9 +25,16 @@ function changeScreen(scrId) {
             document.getElementById('setting').style.display = 'none';
         }
 
-        if (scrId === 'create-scr' && !username) {
+        if (scrId === 'create-scr' && username === null) {
             alert('ユーザー名が設定されていません');
             changeScreen('title-scr')
         }
     }
+}
+
+function setName() {
+    const name = document.getElementById('name-form').value
+    if (/\s/.test(name) || !name) return;
+
+    console.log(name)
 }
