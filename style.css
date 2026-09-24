@@ -1,0 +1,214 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+h1 {
+    text-align: center;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    margin: 1em 0;
+    padding: .9em 2em;
+    border: 1px solid #2589d0;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #2589d0;
+    font-size: 1em;
+    transition: .3s;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2589d0;
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.page {
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.mini {
+    position: fixed;
+    top: 10px;
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+}
+
+.mini-left {
+    left: 10px;
+}
+
+.mini-right {
+    right: 10px;
+}
+
+.mini button {
+    width: auto;
+    margin: 0;
+    padding: 5px;
+    border: none;
+    background: transparent;
+}
+
+.mini button:hover {
+    background: transparent;
+    opacity: 0.8;
+}
+
+/*オーバーレイ*/
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 500;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 共通パネル用閉じるボタン */
+.close-btn {
+    width: auto;
+    margin: 0;
+    padding: 0 10px;
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background: none;
+    color: #ccc;
+}
+
+/*サイドメニュー*/
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #1a1a1a;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.side-menu.active {
+    left: 0; /* 左からスライドして表示 */
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+}
+
+.side-menu li {
+    margin-bottom: 15px;
+}
+
+.side-menu button {
+    width: 100%;
+}
+
+.side-chat {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 350px;
+    height: 100vh;
+    background-color: #2b2b2b;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.side-chat.active {
+    right: 0;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1f1f1f;
+    border-bottom: 1px solid #444;
+}
+
+.chat-header h3 {
+    margin: 0;
+}
+
+.chat-content {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 15px;
+    background-color: #1f1f1f;
+    gap: 8px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+.chat-input-area input:focus {
+    outline: none;
+    border-color: #2589d0;
+}
+
+.chat-input-area .send-btn {
+    width: auto;
+    margin: 0;
+    padding: 8px 16px;
+    font-size: 14px;
+}

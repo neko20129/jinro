@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>オンライン人狼</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <!-- 左上：メニューボタン -->
+    <div class="mini mini-left" id="menu">
+        <button id="menubtn"><img src="img/menu.png" width="70px"></button>
+    </div>
+
+    <!-- 右上：チャットボタン -->
+    <div class="mini mini-right" id="chat">
+        <button id="messagebtn"><img src="img/message.png" width="70px"></button>
+    </div>
+
+    <!-- 背景オーバーレイ -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- 左から出てくるサイドメニュー -->
+    <nav id="side-menu" class="side-menu">
+        <button id="close-menu-btn" class="close-btn">&times;</button>
+        <ul>
+            <li><a id="loginbtn">ログイン</a></li>
+            <li><a id="friendbtn">フレンド</a></li>
+            <li><a id="settingsbtn">設定</a></li>
+        </ul>
+    </nav>
+
+    <!-- 右から出てくるチャット欄 -->
+    <div id="side-chat" class="side-chat">
+        <div class="chat-header">
+            <h3>チャット</h3>
+            <button id="close-chat-btn" class="close-btn">&times;</button>
+        </div>
+        <div class="chat-content">
+            <p style="color: #aaa; text-align: center; margin-top: 20px;">メッセージがここに表示されます</p>
+        </div>
+        <div class="chat-input-area">
+            <input id="message-input" type="text" placeholder="メッセージを入力..." />
+            <button class="send-btn" id="send-btn">送信</button>
+        </div>
+    </div>
+
+
+    <div class="page" id="title">
+        <div style="display:block">
+            <h1>オンライン人狼</h1>
+            <button id="create-room">部屋を作る</button>
+            <button id="join-room">部屋に入る</button>
+            <button id="roles">役職一覧</button>
+        </div>
+    </div>
+
+    <div class="page" id="login">
+        <h1>ログイン</h1>
+    </div>
+    
+    <div class="page" id="room">
+
+    </div>
+
+    <div class="page" id="join">
+
+    </div>
+
+    <div class="page" id="role">
+
+    </div>
+
+    <script src="data.js"></script>
+    <script src="gui.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
