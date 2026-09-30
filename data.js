@@ -2,7 +2,7 @@ const SUPABASE_URL = 'https://fzgvfhxooshlwiumvfow.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6Z3ZmaHhvb3NobHdpdW12Zm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3MTAzOTksImV4cCI6MjEwNDI4NjM5OX0.SsSY9_6TQLicAAW--08B1IVtfXYEVZCTz-WeUdg-Uq4';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-//送信用関数
+//送信関数
 async function insertData(tableName, dataObject) {
     const { data, error } = await supabaseClient
         .from(tableName)
