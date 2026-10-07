@@ -26,9 +26,10 @@
     <nav id="side-menu" class="side-menu">
         <button id="close-menu-btn" class="close-btn">&times;</button>
         <ul>
-            <li><a id="loginbtn">ログイン</a></li>
-            <li><a id="friendbtn">フレンド</a></li>
-            <li><a id="settingsbtn">設定</a></li>
+            <li><a id="home-btn" onclick="showPage('title')">ホーム</a></li>
+            <li><a id="login-btn" onclick="showPage('login')">ログイン</a></li>
+            <li><a id="friend-btn" onclick="showPage('friend')">フレンド</a></li>
+            <li><a id="settings-btn" onclick="showPage('settings')">設定</a></li>
         </ul>
     </nav>
 
@@ -38,7 +39,7 @@
             <h3>チャット</h3>
             <button id="close-chat-btn" class="close-btn">&times;</button>
         </div>
-        <div class="chat-content">
+        <div class="chat-content" id="chat-content">
             <p style="color: #aaa; text-align: center; margin-top: 20px;">メッセージがここに表示されます</p>
         </div>
         <div class="chat-input-area">
@@ -60,7 +61,15 @@
     <div class="page" id="login">
         <h1>ログイン</h1>
     </div>
+
+    <div class="page" id="friend">
+        <h1>フレンド</h1>
+    </div>
     
+    <div class="page" id="settings">
+        <h1>設定</h1>
+    </div>
+
     <div class="page" id="room">
 
     </div>
@@ -74,8 +83,8 @@
     </div>
 
     <script src="data.js"></script>
-    <script src="gui.js"></script>
     <script src="main.js"></script>
+    <script src="gui.js"></script>
 </body>
 
 </html>

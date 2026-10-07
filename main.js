@@ -12,7 +12,9 @@ function generateUuid() {
 
 async function sendMessage() {
     const message = messageInputElm.value;
-    await handleSend('messages', { message: message, uuid: uuid });
+    await handleSend('messages', { message: message });
+    messageInputElm.value = '';
+    addMessage(message);
 }
 
 async function fetchMessage() {
