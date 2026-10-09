@@ -27,7 +27,6 @@
         <button id="close-menu-btn" class="close-btn">&times;</button>
         <ul>
             <li><a id="home-btn" onclick="showPage('title')">ホーム</a></li>
-            <li><a id="login-btn" onclick="showPage('login')">ログイン</a></li>
             <li><a id="friend-btn" onclick="showPage('friend')">フレンド</a></li>
             <li><a id="settings-btn" onclick="showPage('settings')">設定</a></li>
         </ul>
@@ -58,16 +57,21 @@
         </div>
     </div>
 
-    <div class="page" id="login">
-        <h1>ログイン</h1>
-    </div>
-
     <div class="page" id="friend">
         <h1>フレンド</h1>
     </div>
     
     <div class="page" id="settings">
-        <h1>設定</h1>
+        <div>
+            <h1>設定</h1>
+            <div class="setting-content">
+                <label for="username" class="label">名前を設定</label>
+                <div class="input-container">
+                    <input type="text" id="username" class="textbox" maxlength="15" placeholder="15文字以内の名前"/>
+                    <button id="setname-btn">設定</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="page" id="room">
