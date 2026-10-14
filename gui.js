@@ -1,10 +1,15 @@
-//入力
+//ボタン入力
 const menuBtn = document.getElementById('menubtn');
 const messageBtn = document.getElementById('messagebtn');
 const closeMenuBtn = document.getElementById('close-menu-btn');
 const closeChatBtn = document.getElementById('close-chat-btn');
-const loginbtn = document.getElementById('login-btn');
-        
+
+const sendBtnElm = document.getElementById('send-btn');
+const setnameBtn = document.getElementById('setname-btn');
+
+//その他の入力
+const messageInputElm = document.getElementById('message-input');
+
 //出力
 const sideMenu = document.getElementById('side-menu');
 const sideChat = document.getElementById('side-chat');
@@ -52,7 +57,8 @@ messageBtn.addEventListener('click', () => {
 });
 
 
-sendBtnElm.addEventListener('click', sendMessage)
+sendBtnElm.addEventListener('click', sendMessage);
+setnameBtn.addEventListener('click', setName);
 
 closeMenuBtn.addEventListener('click', closeAll);        
 closeChatBtn.addEventListener('click', closeAll);

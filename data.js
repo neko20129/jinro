@@ -18,10 +18,6 @@ async function insertData(tableName, dataObject) {
 //送信呼び出し用
 async function handleSend(tableName, data) {
     const success = await insertData(tableName, data);
-
-    if (success) {
-        alert('メッセージを送信しました');
-    }
 }
 
 //受信用関数
