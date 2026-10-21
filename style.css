@@ -212,3 +212,17 @@ a {
     padding: 8px 16px;
     font-size: 14px;
 }
+
+.textbox-1 {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #969da3;
+    border-radius: 3px;
+    color: #333;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.textbox-1::placeholder {
+    color: #999;
+}

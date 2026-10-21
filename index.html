@@ -26,9 +26,8 @@
     <nav id="side-menu" class="side-menu">
         <button id="close-menu-btn" class="close-btn">&times;</button>
         <ul>
-            <li><a id="loginbtn">ログイン</a></li>
-            <li><a id="friendbtn">フレンド</a></li>
-            <li><a id="settingsbtn">設定</a></li>
+            <li><a onclick="showPage('friend')">フレンド</a></li>
+            <li><a onclick="showPage('settings')">設定</a></li>
         </ul>
     </nav>
 
@@ -47,6 +46,16 @@
         </div>
     </div>
 
+    <div class="page" id="settings">
+        <div>
+            <h1>設定</h1>
+            <div class="setting">
+                <p>ユーザー名を変更する</p>
+                <input type="text" class="textbox-1" placeholder="ユーザー名"/>
+            </div>
+        </div>
+    </div>
+
 
     <div class="page" id="title">
         <div style="display:block">
@@ -55,10 +64,6 @@
             <button id="join-room">部屋に入る</button>
             <button id="roles">役職一覧</button>
         </div>
-    </div>
-
-    <div class="page" id="login">
-        <h1>ログイン</h1>
     </div>
     
     <div class="page" id="room">

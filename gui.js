@@ -1,3 +1,20 @@
+//ボタン
+const menuBtn = document.getElementById('menubtn');
+const messageBtn = document.getElementById('messagebtn');
+const closeMenuBtn = document.getElementById('close-menu-btn');
+const closeChatBtn = document.getElementById('close-chat-btn');
+
+//出力
+const sideMenu = document.getElementById('side-menu');
+const sideChat = document.getElementById('side-chat');
+const overlay = document.getElementById('overlay');
+
+function closeAll() {
+    sideMenu.classList.remove('active');
+    sideChat.classList.remove('active');
+    overlay.classList.remove('active');
+}
+
 function showPage(pageId) {
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => {
@@ -7,17 +24,9 @@ function showPage(pageId) {
             page.style.display = 'none';
         }
     });
+    closeAll()
 }
 showPage('title');
-
-const menuBtn = document.getElementById('menubtn');
-const messageBtn = document.getElementById('messagebtn');
-const closeMenuBtn = document.getElementById('close-menu-btn');
-const closeChatBtn = document.getElementById('close-chat-btn');
-        
-const sideMenu = document.getElementById('side-menu');
-const sideChat = document.getElementById('side-chat');
-const overlay = document.getElementById('overlay');
 
 menuBtn.addEventListener('click', () => {
     closeAll();
@@ -30,12 +39,6 @@ messageBtn.addEventListener('click', () => {
     sideChat.classList.add('active');
     overlay.classList.add('active');
 });
-
-function closeAll() {
-    sideMenu.classList.remove('active');
-    sideChat.classList.remove('active');
-    overlay.classList.remove('active');
-}
 
 closeMenuBtn.addEventListener('click', closeAll);        
 closeChatBtn.addEventListener('click', closeAll);
