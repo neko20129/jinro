@@ -1,8 +1,5 @@
 //jinro_game
 //jinro_game_matsubara
-
-const sendBtnElm = document.getElementById('send-btn');
-const messageInputElm = document.getElementById('message-input');
 const uuid = localStorage.getItem('uuid') ?? generateUuid();
 
 function generateUuid() {
