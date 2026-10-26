@@ -15,6 +15,9 @@ const sideMenu = document.getElementById('side-menu');
 const sideChat = document.getElementById('side-chat');
 const overlay = document.getElementById('overlay');
 
+//変数
+let username = localStorage.getItem('username') ?? prompt('【初期設定】\nユーザー名を15字以内で入力してください','ユーザー名')
+
 function closeAll() {
     sideMenu.classList.remove('active');
     sideChat.classList.remove('active');
@@ -30,6 +33,9 @@ function showPage(pageId) {
             page.style.display = 'none';
         }
     });
+    //初期値設定
+    nameInput.value = username;
+
     closeAll();
 }
 showPage('title');

@@ -1,7 +1,5 @@
 //jinro_game
 //jinro_game_matsubara
-let username = localStorage.getItem('username') ?? prompt('【初期設定】\nユーザー名を15字以内で入力してください','ユーザー名')
-
 function generateUuid() {
     localStorage.setItem('uuid', crypto.randomUUID());
     return localStorage.getItem('uuid');
@@ -27,6 +25,7 @@ async function fetchMessage() {
 
 //ボタンクリック
 sendBtn.addEventListener('click', sendMessage);
+setnameBtn.addEventListener('click', setUsername);
 
 //ゲームループ
 setInterval(() => {
