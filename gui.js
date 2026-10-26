@@ -3,10 +3,12 @@ const menuBtn = document.getElementById('menubtn');
 const messageBtn = document.getElementById('messagebtn');
 const closeMenuBtn = document.getElementById('close-menu-btn');
 const closeChatBtn = document.getElementById('close-chat-btn');
-const sendBtnElm = document.getElementById('send-btn');
+const sendBtn = document.getElementById('send-btn');
+const setnameBtn = document.getElementById('set-name');
 
 //ボタン以外の入力
-const messageInputElm = document.getElementById('message-input');
+const messageInput = document.getElementById('message-input');
+const nameInput = document.getElementById('name-input');
 
 //出力
 const sideMenu = document.getElementById('side-menu');
@@ -28,15 +30,15 @@ function showPage(pageId) {
             page.style.display = 'none';
         }
     });
-    closeAll()
+    closeAll();
 }
 showPage('title');
 
 function reloadUI() {
-    if (messageInputElm.value) {
-        sendBtnElm.disabled = false;
+    if (messageInput.value) {
+        sendBtn.disabled = false;
     } else {
-        sendBtnElm.disabled = true;
+        sendBtn.disabled = true;
     }
 }
 
@@ -55,5 +57,3 @@ messageBtn.addEventListener('click', () => {
 closeMenuBtn.addEventListener('click', closeAll);        
 closeChatBtn.addEventListener('click', closeAll);
 overlay.addEventListener('click', closeAll);
-
-sendBtnElm.addEventListener('click', sendMessage);

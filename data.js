@@ -37,3 +37,9 @@ async function fetchData(tableName) {
 
     return data;
 }
+
+//リセット
+function resetStorage(s) {
+    if (!s) return localStorage.clear();
+    localStorage.removeItem(s); 
+}
