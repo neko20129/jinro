@@ -37,9 +37,7 @@
             <h3>チャット</h3>
             <button id="close-chat-btn" class="close-btn">&times;</button>
         </div>
-        <div class="chat-content">
-            <p style="color: #aaa; text-align: center; margin-top: 20px;">メッセージがここに表示されます</p>
-        </div>
+        <div class="chat-content" id="chat-content"></div>
         <div class="chat-input-area">
             <input id="message-input" type="text" placeholder="メッセージを入力..." />
             <button class="send-btn" id="send-btn">送信</button>
@@ -83,7 +81,7 @@
 
     <script src="data.js"></script>
     <script src="gui.js"></script>
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 </body>
 
 </html>

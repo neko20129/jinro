@@ -20,9 +20,27 @@ async function setUsername() {
 
 async function fetchMessage() {
     const messages = await fetchData('messages');
-    console.log(messages);
+    reloadMessage(messages);
 }
 
+function reloadMessage(dataList) {
+    const sortedData = [...dataList].sort((a, b) => new Date(a.time) - new Date(b.time));
+    chatcontentsArea.innerHTML = sortedData.map(item => `
+        <div class="message-item">
+          <div class="sender">ID: ${item.sender_id}</div>
+          <div class="text">${item.message}</div>
+        </div>
+    `).join('');
+    console.log(sortedData);
+}
+
+function reloadUI() {
+
+}
+
+function reloadData() {
+    fetchMessage();
+}
 //ボタンクリック
 sendBtn.addEventListener('click', sendMessage);
 setnameBtn.addEventListener('click', setUsername);
@@ -31,3 +49,7 @@ setnameBtn.addEventListener('click', setUsername);
 setInterval(() => {
     reloadUI();
 }, 100);
+
+setInterval(() => {
+    reloadData();
+}, 3000)

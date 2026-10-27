@@ -11,6 +11,7 @@ const messageInput = document.getElementById('message-input');
 const nameInput = document.getElementById('name-input');
 
 //出力
+const chatcontentsArea = document.getElementById('chat-content');
 const sideMenu = document.getElementById('side-menu');
 const sideChat = document.getElementById('side-chat');
 const overlay = document.getElementById('overlay');

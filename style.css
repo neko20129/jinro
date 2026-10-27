@@ -1,3 +1,8 @@
+*:disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
 html, body {
     padding: 0;
     margin: 0;
@@ -32,7 +37,6 @@ button:hover {
 button:disabled {
     border: #555;
     color: #555;
-    pointer-events: none;
 }
 
 a {
@@ -188,6 +192,22 @@ a {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.message-item {
+    background: #333;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.sender {
+    font-size: 0.75rem;
+    color: #eee;
+}
+
+.text {
+    font-size: 0.95rem;
+    color: #fff;
 }
 
 .chat-input-area {
