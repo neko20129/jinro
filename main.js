@@ -6,17 +6,20 @@ function generateUuid() {
 }
 const uuid = localStorage.getItem('uuid') ?? generateUuid();
 
-function nameprompt(str) {
-    const prompt = prompt(str);
-    if (!prompt) return;
-    await setUsername(prompt);
-    return prompt;
+async function nameprompt(str) {
+    const userprompt = prompt(str);
+    if (!userprompt) return;
+    await setUsername(userprompt);
+    return userprompt;
 }
+
 let username = localStorage.getItem('username') ?? nameprompt('【初期設定】\nユーザー名を15字以内で入力してください','ユーザー名');
 
 async function sendMessage() {
     const message = messageInput.value;
     await handleSend('messages', { message: message, sender_id: uuid });
+    messageInput.value = '';
+    reloadData();
 }
 
 async function setUsername(option) {
@@ -67,4 +70,7 @@ setInterval(() => {
 
 setInterval(() => {
     reloadData();
-}, 3000)
+}, 10000)
+
+//読み込み時実行
+document.addEventListener('DOMContentLoaded', reloadData);

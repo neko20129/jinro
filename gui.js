@@ -11,7 +11,7 @@ const messageInput = document.getElementById('message-input');
 const nameInput = document.getElementById('name-input');
 
 //出力
-const chatcontentsArea = document.getElement('chat-content');
+const chatcontentsArea = document.getElementById('chat-content');
 const sideMenu = document.getElementById('side-menu');
 const sideChat = document.getElementById('side-chat');
 const overlay = document.getElementById('overlay');
@@ -32,8 +32,7 @@ function showPage(pageId) {
         }
     });
     //初期値設定
-    nameInput.value = username;
-
+    if (typeof username) nameInput.value = typeof username;
     closeAll();
 }
 showPage('title');
