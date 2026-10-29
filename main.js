@@ -6,13 +6,21 @@ function generateUuid() {
 }
 const uuid = localStorage.getItem('uuid') ?? generateUuid();
 
+function nameprompt(str) {
+    const prompt = prompt(str);
+    if (!prompt) return;
+    await setUsername(prompt);
+    return prompt;
+}
+let username = localStorage.getItem('username') ?? nameprompt('【初期設定】\nユーザー名を15字以内で入力してください','ユーザー名');
+
 async function sendMessage() {
     const message = messageInput.value;
     await handleSend('messages', { message: message, sender_id: uuid });
 }
 
-async function setUsername() {
-    const newname = nameInput.value;
+async function setUsername(option) {
+    const newname = option ?? nameInput.value;
     localStorage.setItem('username', newname);
     username = newname;
     await handleSend('players', { player_name: newname, player_id: uuid });
@@ -23,7 +31,14 @@ async function fetchMessage() {
     reloadMessage(messages);
 }
 
-function reloadMessage(dataList) {
+async function idToName(id) {
+    const playerData = await fetchData('players');
+    const map = new Map(playerData.map(item => [item.id, item]));
+    const result = Array.from(map.values())[0].player_name;
+    console.log(playerData);
+}
+
+async function reloadMessage(dataList) {
     const sortedData = [...dataList].sort((a, b) => new Date(a.time) - new Date(b.time));
     chatcontentsArea.innerHTML = sortedData.map(item => `
         <div class="message-item">

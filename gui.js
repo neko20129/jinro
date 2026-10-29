@@ -11,13 +11,10 @@ const messageInput = document.getElementById('message-input');
 const nameInput = document.getElementById('name-input');
 
 //出力
-const chatcontentsArea = document.getElementById('chat-content');
+const chatcontentsArea = document.getElement('chat-content');
 const sideMenu = document.getElementById('side-menu');
 const sideChat = document.getElementById('side-chat');
 const overlay = document.getElementById('overlay');
-
-//変数
-let username = localStorage.getItem('username') ?? prompt('【初期設定】\nユーザー名を15字以内で入力してください','ユーザー名')
 
 function closeAll() {
     sideMenu.classList.remove('active');
