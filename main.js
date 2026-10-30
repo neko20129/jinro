@@ -35,10 +35,9 @@ async function fetchMessage() {
 }
 
 async function idToName(id) {
-    const playerData = await fetchData('players');
-    const map = new Map(playerData.map(item => [item.id, item]));
-    const result = Array.from(map.values())[0].player_name;
-    console.log(playerData);
+    const list = await fetchData('players');
+    const match = list.findLast(item => item.player_id === id);
+    return match ? match.player_name : undefined;
 }
 
 async function reloadMessage(dataList) {
