@@ -32,7 +32,7 @@ function showPage(pageId) {
         }
     });
     //初期値設定
-    if (typeof username) nameInput.value = typeof username;
+    if (pageId === 'settings') nameInput.value = username;
     closeAll();
 }
 showPage('title');

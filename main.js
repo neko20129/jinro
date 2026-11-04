@@ -22,11 +22,11 @@ async function sendMessage() {
     reloadData();
 }
 
-async function setUsername(option) {
-    const newname = option ?? nameInput.value;
+async function setUsername(newname) {
     localStorage.setItem('username', newname);
     username = newname;
     await handleSend('players', { player_name: newname, player_id: uuid });
+    alert(`ユーザー名を${username}に設定しました`);
 }
 
 async function fetchMessage() {
@@ -58,9 +58,10 @@ function reloadUI() {
 function reloadData() {
     fetchMessage();
 }
+
 //ボタンクリック
-sendBtn.addEventListener('click', sendMessage);
-setnameBtn.addEventListener('click', setUsername);
+sendBtn.onclick = () => sendMessage();
+setnameBtn.onclick = async() => setUsername(nameInput.value);
 
 //ゲームループ
 setInterval(() => {
