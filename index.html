@@ -11,12 +11,16 @@
 <body>
     <!-- 左上：メニューボタン -->
     <div class="mini mini-left" id="menu">
-        <button id="menubtn"><img src="img/menu.png" width="70px"></button>
+        <button id="menubtn" title="メニューを開く"><img src="img/menu.png" width="70px"></button>
     </div>
 
     <!-- 右上：チャットボタン -->
     <div class="mini mini-right" id="chat">
-        <button id="messagebtn"><img src="img/message.png" width="70px"></button>
+        <button id="messagebtn" title="チャットを開く"><img src="img/message.png" width="70px"></button>
+    </div>
+
+    <div class="mini mini-bottom">
+        <button id="backbtn" title="ホームに戻る" onclick="showPage('title')"><img src="img/home.png" width="70px"></button>
     </div>
 
     <!-- 背景オーバーレイ -->
@@ -61,14 +65,16 @@
     <div class="page" id="title">
         <div style="display:block">
             <h1>オンライン人狼</h1>
-            <button id="create-room">部屋を作る</button>
-            <button id="join-room">部屋に入る</button>
-            <button id="roles">役職一覧</button>
+            <button onclick="showPage('room')">部屋を作る</button>
+            <button onclick="showPage('join')">部屋に入る</button>
+            <button onclick="showPage('role')">役職一覧</button>
         </div>
     </div>
     
     <div class="page" id="room">
-
+        <div style="display: block;">
+            <h1>ロビー</h1>
+        </div>
     </div>
 
     <div class="page" id="join">

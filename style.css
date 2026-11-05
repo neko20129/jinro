@@ -69,7 +69,12 @@ a {
     right: 10px;
 }
 
-.mini button {
+.mini-bottom {
+    top: auto;
+    bottom: 10px;
+}
+
+.mini > button {
     width: auto;
     margin: 0;
     padding: 5px;
