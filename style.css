@@ -201,12 +201,12 @@ a {
 }
 
 .sender {
-    font-size: 0.75rem;
+    font-size: .9rem;
     color: #eee;
 }
 
 .text {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #fff;
 }
 

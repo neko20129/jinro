@@ -13,7 +13,7 @@ async function nameprompt(str) {
     return userprompt;
 }
 
-let username = localStorage.getItem('username') ?? nameprompt('【初期設定】\nユーザー名を15字以内で入力してください','ユーザー名');
+var username = localStorage.getItem('username') ?? nameprompt('【初期設定】\nユーザー名を15字以内で入力してください','ユーザー名');
 
 async function sendMessage() {
     const message = messageInput.value;
@@ -23,9 +23,9 @@ async function sendMessage() {
 }
 
 async function setUsername(newname) {
-    localStorage.setItem('username', newname);
-    username = newname;
-    await handleSend('players', { player_name: newname, player_id: uuid });
+    username = await newname;
+    localStorage.setItem('username', username);
+    await handleSend('players', { player_name: username, player_id: uuid });
     alert(`ユーザー名を${username}に設定しました`);
 }
 
@@ -42,14 +42,22 @@ async function idToName(id) {
 
 async function reloadMessage(dataList) {
     const sortedData = [...dataList].sort((a, b) => new Date(a.time) - new Date(b.time));
-    chatcontentsArea.innerHTML = sortedData.map(item => `
+
+    const displayDataList = await Promise.all(
+        sortedData.map(async (item) => {
+            const name = await idToName(item.sender_id);
+            return { ...item, sender_name: name };
+        })
+    );
+
+    chatcontentsArea.innerHTML = displayDataList.map(item => `
         <div class="message-item">
-          <div class="sender">ID: ${item.sender_id}</div>
+          <div class="sender">ユーザー名: ${item.sender_name}</div>
           <div class="text">${item.message}</div>
         </div>
     `).join('');
-    console.log(sortedData);
 }
+
 
 function reloadUI() {
 
