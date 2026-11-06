@@ -5,6 +5,7 @@ const closeMenuBtn = document.getElementById('close-menu-btn');
 const closeChatBtn = document.getElementById('close-chat-btn');
 const sendBtn = document.getElementById('send-btn');
 const setnameBtn = document.getElementById('set-name');
+const backbtn = document.getElementById('backbtn');
 
 //ボタン以外の入力
 const messageInput = document.getElementById('message-input');
@@ -32,6 +33,8 @@ function showPage(pageId) {
         }
     });
     //初期値設定
+    if (pageId === 'title') backbtn.style.display = 'none';
+    if (pageId !== 'title') backbtn.style.display = '';
     if (pageId === 'settings') nameInput.value = username;
     closeAll();
 }
