@@ -16,6 +16,24 @@ const chatcontentsArea = document.getElementById('chat-content');
 const sideMenu = document.getElementById('side-menu');
 const sideChat = document.getElementById('side-chat');
 const overlay = document.getElementById('overlay');
+const roomIdText = document.getElementById('room-id-text');
+const participantList = document.getElementById('participant-list');
+
+async function renderParticipants() {
+    if (!participantList) return;
+
+    const players = await fetchData('players');
+    const participantNames = [...new Map((players ?? []).map(player => [player.player_id, player.player_name])).values()]
+        .filter(Boolean);
+
+    const names = participantNames.length ? participantNames : [username || 'あなた'];
+    participantList.innerHTML = names.map(name => `<li>${name}</li>`).join('');
+
+    if (roomIdText) {
+        const roomId = localStorage.getItem('roomId') || '000000';
+        roomIdText.textContent = roomId;
+    }
+}
 
 function closeAll() {
     sideMenu.classList.remove('active');
@@ -36,6 +54,12 @@ function showPage(pageId) {
     if (pageId === 'title') backbtn.style.display = 'none';
     if (pageId !== 'title') backbtn.style.display = '';
     if (pageId === 'settings') nameInput.value = username;
+    if (pageId === 'room') {
+        const roomId = localStorage.getItem('roomId') ?? generateRoomid();
+        localStorage.setItem('roomId', roomId);
+        if (roomIdText) roomIdText.textContent = roomId;
+        renderParticipants();
+    }
     closeAll();
 }
 showPage('title');

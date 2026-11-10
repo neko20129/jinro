@@ -71,6 +71,7 @@ function reloadUI() {
 
 function reloadData() {
     fetchMessage();
+    renderParticipants();
 }
 
 //ボタンクリック

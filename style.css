@@ -39,6 +39,62 @@ button:disabled {
     color: #555;
 }
 
+.lobby-panel {
+    width: min(520px, 80vw);
+    padding: 30px 24px;
+    border: 1px solid #d9dde3;
+    border-radius: 12px;
+    background: #f8fafc;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.room-id-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0 12px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    background: #eaf3ff;
+    color: #1f2d3d;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.room-id-text {
+    font-size: 1.8rem;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    color: #0d5ea6;
+}
+
+.participant-box {
+    margin-top: 16px;
+    text-align: left;
+}
+
+.participant-box h2 {
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+}
+
+.participant-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.participant-list li {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #dbe2ea;
+    font-size: 1rem;
+}
+
 a {
     text-decoration: none;
     color: #fff;
