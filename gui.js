@@ -25,7 +25,7 @@ async function renderParticipants(roomid) {
     const targetRoomId = String(roomid ?? localStorage.getItem('roomId') ?? '').padStart(6, '0');
     const players = await fetchData('players');
     const filteredPlayers = (players ?? []).filter(player => {
-        const storedRoomId = player.room;
+        const storedRoomId = player.room ?? player.room_id;
         return storedRoomId != null && String(storedRoomId).padStart(6, '0') === targetRoomId;
     });
 
@@ -33,7 +33,13 @@ async function renderParticipants(roomid) {
         .filter(Boolean);
 
     const names = participantNames.length ? participantNames : [username || 'あなた'];
-    participantList.innerHTML = names.map(name => `<li>${name}</li>`).join('');
+    const escapeHtml = value => String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    participantList.innerHTML = names.map(name => `<li>${escapeHtml(name)}</li>`).join('');
 
     if (roomIdText) {
         const roomId = targetRoomId || '000000';
@@ -71,7 +77,7 @@ function showPage(pageId) {
 showPage('title');
 
 function reloadUI() {
-    if (messageInput.value) {
+    if (messageInput.value.trim()) {
         sendBtn.disabled = false;
     } else {
         sendBtn.disabled = true;

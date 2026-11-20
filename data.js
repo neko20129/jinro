@@ -9,9 +9,10 @@ async function insertData(tableName, data) {
         return false;
     }
 
-    const { error } = await supabaseClient
-        .from(tableName)
-        .insert(data);
+    const query = supabaseClient.from(tableName);
+    const { error } = tableName === 'players' && data.player_id != null
+        ? await query.upsert(data, { onConflict: 'player_id' })
+        : await query.insert(data);
 
     if (error) {
         console.error(`[${tableName}] への保存エラー:`, error);
@@ -21,25 +22,12 @@ async function insertData(tableName, data) {
 }
 
 async function savePlayerState(player) {
-    const { data, error } = await supabaseClient
+    const { error } = await supabaseClient
         .from('players')
-        .update({ player_name: player.player_name, room: player.room })
-        .eq('player_id', player.player_id)
-        .select('player_id');
+        .upsert(player, { onConflict: 'player_id' });
 
     if (error) {
-        console.error('[players] の更新エラー:', error);
-        return false;
-    }
-
-    if (data?.length) return true;
-
-    const { error: insertError } = await supabaseClient
-        .from('players')
-        .insert(player);
-
-    if (insertError) {
-        console.error('[players] への保存エラー:', insertError);
+        console.error('[players] への保存エラー:', error);
         return false;
     }
     return true;
@@ -61,8 +49,13 @@ async function fetchData(tableName, rowId = null) {
         console.error(`[${tableName}] の取得エラー:`, error);
         return [];
     }
-    return data;
+    return data ?? [];
 }
+
+async function handleSend(tableName, data) {
+    return insertData(tableName, data);
+}
+
 //リセット
 function resetStorage(s) {
     if (!s) return localStorage.clear();
