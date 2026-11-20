@@ -19,18 +19,24 @@ const overlay = document.getElementById('overlay');
 const roomIdText = document.getElementById('room-id-text');
 const participantList = document.getElementById('participant-list');
 
-async function renderParticipants() {
+async function renderParticipants(roomid) {
     if (!participantList) return;
 
+    const targetRoomId = String(roomid ?? localStorage.getItem('roomId') ?? '').padStart(6, '0');
     const players = await fetchData('players');
-    const participantNames = [...new Map((players ?? []).map(player => [player.player_id, player.player_name])).values()]
+    const filteredPlayers = (players ?? []).filter(player => {
+        const storedRoomId = player.room;
+        return storedRoomId != null && String(storedRoomId).padStart(6, '0') === targetRoomId;
+    });
+
+    const participantNames = [...new Map(filteredPlayers.map(player => [player.player_id, player.player_name])).values()]
         .filter(Boolean);
 
     const names = participantNames.length ? participantNames : [username || 'あなた'];
     participantList.innerHTML = names.map(name => `<li>${name}</li>`).join('');
 
     if (roomIdText) {
-        const roomId = localStorage.getItem('roomId') || '000000';
+        const roomId = targetRoomId || '000000';
         roomIdText.textContent = roomId;
     }
 }
@@ -58,7 +64,7 @@ function showPage(pageId) {
         const roomId = localStorage.getItem('roomId') ?? generateRoomid();
         localStorage.setItem('roomId', roomId);
         if (roomIdText) roomIdText.textContent = roomId;
-        renderParticipants();
+        renderParticipants(roomId);
     }
     closeAll();
 }

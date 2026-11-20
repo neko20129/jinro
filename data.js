@@ -3,10 +3,15 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 //送信用関数
-async function insertData(tableName, dataObject) {
-    const { data, error } = await supabaseClient
+async function insertData(tableName, data) {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+        console.error(`[${tableName}] に送信するデータがオブジェクトではありません:`, data);
+        return false;
+    }
+
+    const { error } = await supabaseClient
         .from(tableName)
-        .insert([dataObject]);
+        .insert(data);
 
     if (error) {
         console.error(`[${tableName}] への保存エラー:`, error);
@@ -15,26 +20,49 @@ async function insertData(tableName, dataObject) {
     return true;
 }
 
-//送信呼び出し用
-async function handleSend(tableName, data) {
-    const re = await insertData(tableName, data);
-    console.log(re);
-}
-
-//受信用関数
-async function fetchData(tableName) {
+async function savePlayerState(player) {
     const { data, error } = await supabaseClient
-        .from(tableName) 
-        .select('*');
+        .from('players')
+        .update({ player_name: player.player_name, room: player.room })
+        .eq('player_id', player.player_id)
+        .select('player_id');
 
     if (error) {
-        console.error(`[${tableName}] からの取得エラー:`, error);    
-        return null;
+        console.error('[players] の更新エラー:', error);
+        return false;
     }
 
-    return data;
+    if (data?.length) return true;
+
+    const { error: insertError } = await supabaseClient
+        .from('players')
+        .insert(player);
+
+    if (insertError) {
+        console.error('[players] への保存エラー:', insertError);
+        return false;
+    }
+    return true;
 }
 
+//取得用関数
+async function fetchData(tableName, rowId = null) {
+    let query = supabaseClient
+        .from(tableName)
+        .select('*');
+
+    if (rowId !== null) {
+        query = query.eq('id', rowId);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+        console.error(`[${tableName}] の取得エラー:`, error);
+        return [];
+    }
+    return data;
+}
 //リセット
 function resetStorage(s) {
     if (!s) return localStorage.clear();

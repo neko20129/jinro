@@ -31,7 +31,9 @@ async function sendMessage() {
 async function setUsername(newname) {
     username = await newname;
     localStorage.setItem('username', username);
-    await handleSend('players', { player_name: username, player_id: uuid });
+    const roomId = localStorage.getItem('roomId') ?? generateRoomid();
+    localStorage.setItem('roomId', roomId);
+    await handleSend('players', { player_name: username, player_id: uuid, room_id: roomId });
     alert(`ユーザー名を${username}に設定しました`);
 }
 
@@ -71,7 +73,7 @@ function reloadUI() {
 
 function reloadData() {
     fetchMessage();
-    renderParticipants();
+    renderParticipants(localStorage.getItem('roomId'));
 }
 
 //ボタンクリック
