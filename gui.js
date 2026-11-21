@@ -22,7 +22,7 @@ const participantList = document.getElementById('participant-list');
 async function renderParticipants(roomid) {
     if (!participantList) return;
 
-    const targetRoomId = String(roomid ?? localStorage.getItem('roomId') ?? '').padStart(6, '0');
+    const targetRoomId = String(roomid ?? getAppStorage('roomId') ?? '').padStart(6, '0');
     const players = await fetchData('players');
     const filteredPlayers = (players ?? []).filter(player => {
         const storedRoomId = player.room ?? player.room_id;
@@ -55,10 +55,10 @@ function closeAll() {
 
 let roomStateRevision = 0;
 
-async function showPage(pageId, { isNew = pageId === 'room', leaveRoom = false } = {}) {
+async function showPage(pageId, { leaveRoom = false } = {}) {
     if (pageId === 'title' && leaveRoom) {
         roomStateRevision++;
-        localStorage.removeItem('roomId');
+        resetStorage('roomId');
         await savePlayerState({ player_name: username, player_id: uuid, room: null });
     }
 
@@ -75,21 +75,12 @@ async function showPage(pageId, { isNew = pageId === 'room', leaveRoom = false }
     if (pageId !== 'title') backbtn.style.display = '';
     if (pageId === 'settings') nameInput.value = username;
     if (pageId === 'room') {
-        roomStateRevision++;
-        const roomId = isNew
-            ? generateRoomid()
-            : String(localStorage.getItem('roomId') ?? '').padStart(6, '0');
-        localStorage.setItem('roomId', roomId);
+        const roomId = getAppStorage('roomId') ?? '';
         if (roomIdText) roomIdText.textContent = roomId;
-        if (isNew) {
-            await savePlayerState({ player_name: username, player_id: uuid, room: roomId });
-        }
         await renderParticipants(roomId);
     }
     closeAll();
 }
-showPage('title');
-
 function reloadUI() {
     if (messageInput.value.trim()) {
         sendBtn.disabled = false;

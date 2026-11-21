@@ -65,7 +65,7 @@
     <div class="page" id="title">
         <div style="display:block">
             <h1>オンライン人狼</h1>
-            <button onclick="showPage('room')">部屋を作る</button>
+            <button onclick="enterRoom(generateRoomid())">部屋を作る</button>
             <button onclick="showPage('join')">部屋に入る</button>
             <button onclick="showPage('role')">役職一覧</button>
         </div>
@@ -92,7 +92,8 @@
                 <p>RoomID（6桁）</p>
                 <input id="join-room-id" type="text" class="textbox-1" placeholder="例: 012345" maxlength="6" inputmode="numeric" pattern="[0-9]{1,6}" autocomplete="off" />
             </div>
-            <button id="join-room-btn" onclick="joinRoom()">参加する</button>
+            <button id="join-room-btn" type="button">参加する</button>
+            <p id="join-status" role="status" aria-live="polite"></p>
         </div>
     </div>
 

@@ -13,10 +13,10 @@ function generateUuid() {
     } else {
         value = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
     }
-    localStorage.setItem('uuid', value);
+    setAppStorage('uuid', value);
     return value;
 }
-const uuid = localStorage.getItem('uuid') ?? generateUuid();
+const uuid = getAppStorage('uuid') ?? generateUuid();
 
 function generateRoomid() {
     if (typeof crypto === 'undefined' || typeof crypto.getRandomValues !== 'function') {
@@ -37,7 +37,7 @@ async function nameprompt(str) {
     return trimmedName;
 }
 
-let username = localStorage.getItem('username') ?? '';
+let username = getAppStorage('username') ?? '';
 let usernamePrompted = false;
 if (!username) {
     usernamePrompted = true;
@@ -58,13 +58,13 @@ async function setUsername(newname) {
     if (typeof newname !== 'string') return false;
     username = newname.trim().slice(0, 15);
     if (!username) return false;
-    localStorage.setItem('username', username);
-    const storedRoomId = localStorage.getItem('roomId');
+    setAppStorage('username', username);
+    const storedRoomId = getAppStorage('roomId');
     const roomId = storedRoomId == null || storedRoomId === ''
         ? null
         : String(storedRoomId).padStart(6, '0');
     roomStateRevision++;
-    if (roomId !== null) localStorage.setItem('roomId', roomId);
+    if (roomId !== null) setAppStorage('roomId', roomId);
     const saved = await savePlayerState({ player_name: username, player_id: uuid, room: roomId });
     if (!saved) {
         alert('ユーザー名の保存に失敗しました');
@@ -81,41 +81,59 @@ async function fetchMessage() {
 
 async function fetchUsername() {
     const roomRevision = roomStateRevision;
-    const players = await fetchData('players');
-    const currentPlayer = players.find(player => player.player_id === uuid);
+    const { player: currentPlayer, error } = await fetchPlayerState(uuid);
+    if (error) return;
+
     if (currentPlayer) {
-        username = currentPlayer.player_name;
-        localStorage.setItem('username', username);
-        const playerRoom = currentPlayer.room ?? currentPlayer.room_id;
-        if (roomRevision === roomStateRevision && localStorage.getItem('roomId') == null && playerRoom != null) {
-            const roomId = String(playerRoom).padStart(6, '0');
-            localStorage.setItem('roomId', roomId);
+        username = currentPlayer.player_name ?? null;
+        if (username === null) {
+            resetStorage('username');
+        } else {
+            setAppStorage('username', username);
         }
-    } else if (!username && !usernamePrompted) {
+        const playerRoom = currentPlayer.room ?? currentPlayer.room_id;
+        if (roomRevision === roomStateRevision && getAppStorage('roomId') == null && playerRoom != null) {
+            const roomId = String(playerRoom).padStart(6, '0');
+            setAppStorage('roomId', roomId);
+        }
+    } else {
+        username = null;
         usernamePrompted = true;
-        await nameprompt('ユーザー名を15字以内で入力してください');
+        resetStorage('username');
     }
 }
 
-async function joinRoom() {
-    const input = document.getElementById('join-room-id');
-    const value = input.value.trim();
-    if (!/^\d{1,6}$/.test(value)) {
-        alert('RoomIDは1〜6桁の数字で入力してください');
+async function enterRoom(roomId) {
+    const roomIdInput = String(roomId ?? '').trim();
+    const joinRoomButton = document.getElementById('join-room-btn');
+    const joinStatus = document.getElementById('join-status');
+    if (!/^\d{1,6}$/.test(roomIdInput)) {
+        if (joinStatus) joinStatus.textContent = 'RoomIDは1〜6桁の数字で入力してください';
         return false;
     }
 
-    const roomId = value.padStart(6, '0');
-    roomStateRevision++;
-    localStorage.setItem('roomId', roomId);
-    const saved = await savePlayerState({ player_name: username, player_id: uuid, room: roomId });
-    if (!saved) {
-        alert('部屋への参加に失敗しました');
-        return false;
-    }
+    const normalizedRoomId = roomIdInput.padStart(6, '0');
+    if (joinRoomButton) joinRoomButton.disabled = true;
+    if (joinStatus) joinStatus.textContent = '部屋に参加しています...';
 
-    await showPage('room', { isNew: false });
-    return true;
+    try {
+        const saved = await savePlayerState({ player_name: username, player_id: uuid, room: normalizedRoomId });
+        if (!saved) {
+            if (joinStatus) joinStatus.textContent = '参加情報を保存できませんでした。通信状態を確認して再試行してください。';
+            return false;
+        }
+
+        roomStateRevision++;
+        setAppStorage('roomId', normalizedRoomId);
+        await showPage('room');
+        return true;
+    } catch (error) {
+        console.error('部屋への参加に失敗しました:', error);
+        if (joinStatus) joinStatus.textContent = '通信エラーで参加できませんでした。時間をおいて再試行してください。';
+        return false;
+    } finally {
+        if (joinRoomButton) joinRoomButton.disabled = false;
+    }
 }
 
 async function idToName(id) {
@@ -160,12 +178,15 @@ async function reloadData() {
         fetchMessage(),
         fetchUsername()
     ]);
-    await renderParticipants(localStorage.getItem('roomId'));
+    await renderParticipants(getAppStorage('roomId'));
 }
 
 //ボタンクリック
 sendBtn.onclick = () => sendMessage();
 setnameBtn.onclick = async() => setUsername(nameInput.value);
+document.getElementById('join-room-btn').onclick = () => {
+    enterRoom(document.getElementById('join-room-id').value);
+};
 
 //ゲームループ
 setInterval(() => {
@@ -177,4 +198,23 @@ setInterval(() => {
 }, 10000)
 
 //読み込み時実行
-document.addEventListener('DOMContentLoaded', reloadData);
+document.addEventListener('DOMContentLoaded', async () => {
+    const requestedRoomId = new URLSearchParams(window.location.search).get('room');
+    if (requestedRoomId !== null) {
+        const entered = await enterRoom(requestedRoomId);
+        if (!entered) {
+            const savedRoomId = getAppStorage('roomId');
+            await showPage(savedRoomId ? 'room' : 'title');
+        }
+        await reloadData();
+        return;
+    }
+
+    const savedRoomId = getAppStorage('roomId');
+    if (savedRoomId) {
+        await showPage('room');
+    } else {
+        await showPage('title');
+    }
+    await reloadData();
+});
