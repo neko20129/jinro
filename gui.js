@@ -53,7 +53,15 @@ function closeAll() {
     overlay.classList.remove('active');
 }
 
-function showPage(pageId) {
+let roomStateRevision = 0;
+
+async function showPage(pageId, { isNew = pageId === 'room', leaveRoom = false } = {}) {
+    if (pageId === 'title' && leaveRoom) {
+        roomStateRevision++;
+        localStorage.removeItem('roomId');
+        await savePlayerState({ player_name: username, player_id: uuid, room: null });
+    }
+
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => {
         if (page.id === pageId) {
@@ -67,10 +75,16 @@ function showPage(pageId) {
     if (pageId !== 'title') backbtn.style.display = '';
     if (pageId === 'settings') nameInput.value = username;
     if (pageId === 'room') {
-        const roomId = localStorage.getItem('roomId') ?? generateRoomid();
+        roomStateRevision++;
+        const roomId = isNew
+            ? generateRoomid()
+            : String(localStorage.getItem('roomId') ?? '').padStart(6, '0');
         localStorage.setItem('roomId', roomId);
         if (roomIdText) roomIdText.textContent = roomId;
-        renderParticipants(roomId);
+        if (isNew) {
+            await savePlayerState({ player_name: username, player_id: uuid, room: roomId });
+        }
+        await renderParticipants(roomId);
     }
     closeAll();
 }

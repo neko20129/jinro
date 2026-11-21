@@ -59,9 +59,13 @@ async function setUsername(newname) {
     username = newname.trim().slice(0, 15);
     if (!username) return false;
     localStorage.setItem('username', username);
-    const roomId = String(localStorage.getItem('roomId') ?? generateRoomid()).padStart(6, '0');
-    localStorage.setItem('roomId', roomId);
-    const saved = await handleSend('players', { player_name: username, player_id: uuid, room: roomId });
+    const storedRoomId = localStorage.getItem('roomId');
+    const roomId = storedRoomId == null || storedRoomId === ''
+        ? null
+        : String(storedRoomId).padStart(6, '0');
+    roomStateRevision++;
+    if (roomId !== null) localStorage.setItem('roomId', roomId);
+    const saved = await savePlayerState({ player_name: username, player_id: uuid, room: roomId });
     if (!saved) {
         alert('ユーザー名の保存に失敗しました');
         return false;
@@ -76,13 +80,14 @@ async function fetchMessage() {
 }
 
 async function fetchUsername() {
+    const roomRevision = roomStateRevision;
     const players = await fetchData('players');
     const currentPlayer = players.find(player => player.player_id === uuid);
     if (currentPlayer) {
         username = currentPlayer.player_name;
         localStorage.setItem('username', username);
         const playerRoom = currentPlayer.room ?? currentPlayer.room_id;
-        if (playerRoom != null) {
+        if (roomRevision === roomStateRevision && localStorage.getItem('roomId') == null && playerRoom != null) {
             const roomId = String(playerRoom).padStart(6, '0');
             localStorage.setItem('roomId', roomId);
         }
@@ -90,6 +95,27 @@ async function fetchUsername() {
         usernamePrompted = true;
         await nameprompt('ユーザー名を15字以内で入力してください');
     }
+}
+
+async function joinRoom() {
+    const input = document.getElementById('join-room-id');
+    const value = input.value.trim();
+    if (!/^\d{1,6}$/.test(value)) {
+        alert('RoomIDは1〜6桁の数字で入力してください');
+        return false;
+    }
+
+    const roomId = value.padStart(6, '0');
+    roomStateRevision++;
+    localStorage.setItem('roomId', roomId);
+    const saved = await savePlayerState({ player_name: username, player_id: uuid, room: roomId });
+    if (!saved) {
+        alert('部屋への参加に失敗しました');
+        return false;
+    }
+
+    await showPage('room', { isNew: false });
+    return true;
 }
 
 async function idToName(id) {

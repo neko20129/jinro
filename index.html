@@ -20,7 +20,7 @@
     </div>
 
     <div class="mini mini-bottom">
-        <button id="backbtn" title="ホームに戻る" onclick="showPage('title')"><img src="img/home.png" width="70px"></button>
+        <button id="backbtn" title="ホームに戻る" onclick="showPage('title', { leaveRoom: true })"><img src="img/home.png" width="70px"></button>
     </div>
 
     <!-- 背景オーバーレイ -->
@@ -86,7 +86,14 @@
     </div>
 
     <div class="page" id="join">
-
+        <div class="lobby-panel">
+            <h1>部屋に入る</h1>
+            <div class="input-container">
+                <p>RoomID（6桁）</p>
+                <input id="join-room-id" type="text" class="textbox-1" placeholder="例: 012345" maxlength="6" inputmode="numeric" pattern="[0-9]{1,6}" autocomplete="off" />
+            </div>
+            <button id="join-room-btn" onclick="joinRoom()">参加する</button>
+        </div>
     </div>
 
     <div class="page" id="role">

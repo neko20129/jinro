@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^node --check gui\\.js && node --check main\\.js && node --check data\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
